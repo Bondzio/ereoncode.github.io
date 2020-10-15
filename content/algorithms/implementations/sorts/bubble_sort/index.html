@@ -337,7 +337,58 @@
                 <h1 id="bubble-sort">Сортировка пузырьком (Bubble Sort)<a class="headerlink" href="#bubble-sort" title="Permanent link">&para;</a></h1>
 <h3 id="_1">Описание алгоритма<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
 <h3 id="_2">Реализация алгоритма<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code>
+<div class="highlight"><pre><span></span><code> <span class="k">def</span> <span class="nf">bubble_sort</span><span class="p">(</span><span class="n">collection</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Pure implementation of bubble sort algorithm in Python</span>
+
+<span class="sd">    :param collection: some mutable ordered collection with heterogeneous</span>
+<span class="sd">    comparable items inside</span>
+<span class="sd">    :return: the same collection ordered by ascending</span>
+
+<span class="sd">    Examples:</span>
+<span class="sd">    &gt;&gt;&gt; bubble_sort([0, 5, 2, 3, 2])</span>
+<span class="sd">    [0, 2, 2, 3, 5]</span>
+<span class="sd">    &gt;&gt;&gt; bubble_sort([0, 5, 2, 3, 2]) == sorted([0, 5, 2, 3, 2])</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; bubble_sort([]) == sorted([])</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; bubble_sort([-2, -45, -5]) == sorted([-2, -45, -5])</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; bubble_sort([-23, 0, 6, -4, 34]) == sorted([-23, 0, 6, -4, 34])</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; bubble_sort([&#39;d&#39;, &#39;a&#39;, &#39;b&#39;, &#39;e&#39;, &#39;c&#39;]) == sorted([&#39;d&#39;, &#39;a&#39;, &#39;b&#39;, &#39;e&#39;, &#39;c&#39;])</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; import random</span>
+<span class="sd">    &gt;&gt;&gt; collection = random.sample(range(-50, 50), 100)</span>
+<span class="sd">    &gt;&gt;&gt; bubble_sort(collection) == sorted(collection)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; import string</span>
+<span class="sd">    &gt;&gt;&gt; collection = random.choices(string.ascii_letters + string.digits, k=100)</span>
+<span class="sd">    &gt;&gt;&gt; bubble_sort(collection) == sorted(collection)</span>
+<span class="sd">    True</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">collection</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">swapped</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">i</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">collection</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">collection</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]:</span>
+                <span class="n">swapped</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">collection</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">collection</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">collection</span><span class="p">[</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">],</span> <span class="n">collection</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">swapped</span><span class="p">:</span>
+            <span class="k">break</span>  <span class="c1"># Stop iteration if the collection is sorted.</span>
+    <span class="k">return</span> <span class="n">collection</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">doctest</span>
+    <span class="kn">import</span> <span class="nn">time</span>
+
+    <span class="n">doctest</span><span class="o">.</span><span class="n">testmod</span><span class="p">()</span>
+
+    <span class="n">user_input</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">&quot;Enter numbers separated by a comma:&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">unsorted</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">user_input</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)]</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">process_time</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="o">*</span><span class="n">bubble_sort</span><span class="p">(</span><span class="n">unsorted</span><span class="p">),</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Processing time: </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">process_time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
                 
               
